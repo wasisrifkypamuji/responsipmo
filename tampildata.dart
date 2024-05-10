@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsi/nilaiMahasiswa.dart';
 
 class tampildata extends StatefulWidget {
   const tampildata({super.key});
@@ -22,7 +23,28 @@ class _tampildataState extends State<tampildata> {
                   setState(() {});
                 },
                 child: Text("tmapilkan data")),
-            Text("Daftar nilai")
+            Text("Daftar nilai"),
+            Expanded(
+              child: ListView.builder(
+                itemCount: nilaimahaslist.length,
+                itemBuilder: (context, index) => Card(
+                  child: ListTile(
+                    title: Text(nilaimahaslist[index].nama),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(nilaimahaslist[index].nim),
+                        Text(nilaimahaslist[index].kelas),
+                        Text(nilaimahaslist[index].nilaiteori.toString()),
+                        Text(nilaimahaslist[index].nilaipraktek.toString()),
+                        Text(nilaimahaslist[index].nilaihuruf.toString()),
+                        Text()
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

@@ -7,16 +7,8 @@ class nilaiMahsiswamodel {
   String kelas = "";
   double nilaiteori = 0;
   double nilaipraktek = 0;
-  double totalnilai = 0;
   String nilaihuruf = "";
-
-  set nilaitot(nilaitotal) {
-    nilaitot = nilaitotal;
-  }
-
-  set nilaih(nilaihuruf) {
-    nilaih = nilaihuruf;
-  }
+  double nilaitotal = 0;
 
   nilaiMahsiswamodel(
     this.context,
@@ -25,13 +17,32 @@ class nilaiMahsiswamodel {
     this.kelas,
     this.nilaiteori,
     this.nilaipraktek,
-    this.totalnilai,
   );
-  void hitung() {
-    double totalnilai;
-    totalnilai = nilaipraktek + nilaiteori;
 
-    if (totalnilai >= 80) {}
+  double get getnilaiteori {
+    return nilaiteori;
+  }
+
+  double get getnilaipraktek {
+    return nilaipraktek;
+  }
+
+  double get getnialitotal {
+    return nilaiteori + nilaipraktek;
+  }
+
+  void grade() {
+    if (getnialitotal >= 80) {
+      nilaihuruf = "A";
+    } else if (getnialitotal >= 70) {
+      nilaihuruf = "B";
+    } else if (getnialitotal >= 70) {
+      nilaihuruf = "c";
+    } else if (getnialitotal >= 60) {
+      nilaihuruf = "d";
+    } else {
+      nilaihuruf = "e";
+    }
   }
 }
 

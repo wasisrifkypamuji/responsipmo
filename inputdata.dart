@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:responsi/nilaiMahasiswa.dart';
+import 'package:responsi/tampildata.dart';
+
+String? kelasdipilih;
 
 class datamhs extends StatefulWidget {
   const datamhs({super.key});
@@ -16,8 +20,9 @@ class _datamhsState extends State<datamhs> {
   ];
   TextEditingController nimc = TextEditingController();
   TextEditingController namac = TextEditingController();
-  TextEditingController kelasc = TextEditingController();
+
   TextEditingController nilaiteoric = TextEditingController();
+  TextEditingController nilaipraktekc = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,35 +34,65 @@ class _datamhsState extends State<datamhs> {
         child: ListView(
           children: [
             TextField(
-              controller: namac,
+              controller: nimc,
               decoration: InputDecoration(
                   label: Text("NOMOR INDUK MAHASISWA"),
                   border: OutlineInputBorder()),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
             ),
             TextField(
               controller: namac,
               decoration: InputDecoration(
                   label: Text("nama mahasiswa"), border: OutlineInputBorder()),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-            ),
+            Expanded(
+                child: DropdownButton(
+              hint: Text("Silahkan Pilih kelas"),
+              value: kelasdipilih,
+              items: kelaslist
+                  .map((e) => DropdownMenuItem(
+                        child: Text(e),
+                        value: e,
+                      ))
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  kelasdipilih = value;
+                });
+              },
+            )),
             TextField(
-              controller: namac,
+              controller: nilaiteoric,
               decoration: InputDecoration(
                   label: Text("nilai teori"), border: OutlineInputBorder()),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-            ),
             TextField(
-              controller: namac,
+              controller: nilaipraktekc,
               decoration: InputDecoration(
                   label: Text("nilai praktik"), border: OutlineInputBorder()),
             ),
+            Expanded(
+                child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        nilaiMahsiswamodel nialimahasiswa = nilaiMahsiswamodel(
+                          context,
+                          nimc.text,
+                          namac.text,
+                          kelasdipilih.toString(),
+                          double.parse(nilaiteoric.text),
+                          double.parse(nilaipraktekc.text),
+                        );
+                        nialimahasiswa.grade();
+                        nilaimahaslist.add(nialimahasiswa);
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => tampildata(),
+                            ));
+                      });
+                    },
+                    child: Text("simpan")))
           ],
         ),
       ),
